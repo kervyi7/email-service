@@ -1,0 +1,100 @@
+app-file-viewer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 9;
+}
+
+.mail-container {
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.mail-header {
+  margin: 16px 5%;
+}
+
+.mail-subject {
+  font-size: larger;
+}
+
+.mail-description-container {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.mail-content-container {
+  display: flex;
+  gap: 20px;
+  margin: 30px 0px;
+}
+
+.content-item {
+  width: 200px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0px 0px 6px 0px #d6d6d6;
+  overflow: hidden;
+  cursor: pointer;
+  transition-duration: .2s;
+}
+
+.content-image {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  transition-duration: .2s;
+}
+
+.content-filename-download {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.content-filename {
+  flex-grow: 0;
+  width: 90%;
+  align-self: center;
+}
+
+.download {
+  border: none;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: transparent;
+  opacity: 0;
+}
+
+.content-icon {
+  transform: translate(0, -50%);
+  position: relative;
+  top: 50%;
+  align-self: center;
+  font-size: 40px;
+}
+
+.content-item:hover {
+  box-shadow: 0px 0px 12px 5px #d6d6d6;
+
+  .download {
+    opacity: 1;
+  }
+
+  .content-image {
+    filter: brightness(0.5);
+  }
+}
+
+button {
+  color: #000;
+}
+
+.arrow {
+  margin: 20px;
+}

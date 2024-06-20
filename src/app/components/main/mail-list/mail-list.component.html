@@ -1,0 +1,75 @@
+<nav class="header">
+  <div class="filter-container">
+    <input type="text" class="filter-input" placeholder="Search..." [(ngModel)]="searchedInputValue">
+    <button title="search" (click)="searchMails()" KeyupListener (hotkey)="searchMails()">
+      <i class="material-icons">search</i>
+    </button>
+  </div>
+  <div class="paginator">
+    <div class="paginator-container">
+      <button title="first page" [class.disabled]="isFirstPage()" (click)="goToFirstPage()">
+        <i class="material-icons">keyboard_double_arrow_left</i>
+      </button>
+      <button title="previous page" [class.disabled]="isFirstPage()" (click)="previousPage()">
+        <i class="material-icons">chevron_left</i>
+      </button>
+      <div class="mail-count">
+        {{currentPage}}
+      </div>
+      <button title="next page" [class.disabled]="isLastPage()" (click)="nextPage()">
+        <i class="material-icons">chevron_right</i>
+      </button>
+      <button title="last page" [class.disabled]="isLastPage()" (click)="goToLastPage()">
+        <i class="material-icons">keyboard_double_arrow_right</i>
+      </button>
+    </div>
+    <div class="paginator-container">
+      <div class="blurred" *ngIf="isMenuOpen">
+        <div class="count-menu-container">
+          <div *ngFor="let option of countOptions" class="count-item" (click)="changeMailsCount(option)">{{option}}
+          </div>
+        </div>
+      </div>
+      <div class="mail-count-container">
+        <div class="mail-count">
+          {{mailPerPageCount}}
+        </div>
+        <button title="open selector" (click)="openCountMenu()">
+          <i class="material-icons">keyboard_arrow_down</i>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+<section class="mail-list">
+  <div *ngIf="mails.length == 0" class="empty-mail-list">Not found</div>
+  <div *ngFor="let mail of mails" class="mail-container" (click)="navigateToMail(mail.id)">
+    <div class="mail-name">
+      {{mail.fromName}}
+    </div>
+    <div class="mail-subject-text-container text">
+      <span class="mail-subject">{{mail.subject}}</span>
+      <span class="mail-text">{{mail.text}}</span>
+      <div *ngIf="mail.isAttachments || mail.isContents" class="attachments-container">
+        <div *ngFor="let content of mail.contents; let i = index" (click)="downloadContent($event, content.contentId)"
+          (mouseover)="showPopup(content.contentId)" (mouseout)="showPopup(content.contentId)">
+          <div [ngClass]="changePopupState(content.contentId) ? 'popup' : 'hide'">
+            {{content.fileName}}
+          </div>
+          <div [class.hide]="i > 2" class="attachment-item">
+            <i class="material-icons">{{getIcon(content)}}</i>
+            <div class="text">
+              {{content.fileName}}
+            </div>
+          </div>
+        </div>
+        <div *ngIf="mail.contents.length > 3" class="attachment-item">
+          +{{mail.contents.length - 3}}
+        </div>
+      </div>
+    </div>
+    <div class="mail-date">
+      {{mail.date | date:"dd/MM/yyyy" }}
+    </div>
+  </div>
+</section>

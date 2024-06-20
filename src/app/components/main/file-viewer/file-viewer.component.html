@@ -1,0 +1,41 @@
+<section class="file-viewer-container">
+  <div class="file-viewer-header" [class.document]="isDocument()">
+    <div class="file-name" *ngIf="!isDocument()">
+      <i class="material-icons">insert_drive_file</i> {{ selectedAttachment.fileName }}
+    </div>
+    <div class="file-download" *ngIf="!isDocument()">
+      <button title="download file" (click)="save()">
+        <i class="material-icons">download</i>
+      </button>
+    </div>
+    <div class="file-close" [class.document]="isDocument()">
+      <button title="close preview" (click)="close()">
+        <i class="material-icons">close</i>
+      </button>
+    </div>
+  </div>
+  <div class="file-viewer-body">
+    <div *ngIf="!isFirstFile()" class="file-viewer-nav nav-left">
+      <button (click)="goToPreviousFile()">
+        <i class="material-icons">keyboard_arrow_left</i>
+      </button>
+    </div>
+    <div class="file-viewer-content">
+      <ng-container *ngIf="showFile()">
+        <embed *ngIf="isDocument(); else imageBlock" [attr.src]="fileSrc" [attr.type]="viewContainer.type"
+          [ngStyle]="viewContainerStyle" [attr.title]="selectedAttachment.fileName">
+        <ng-template #imageBlock>
+          <img [attr.src]="fileSrc" [attr.alt]="selectedAttachment.fileName">
+        </ng-template>
+      </ng-container>
+      <div *ngIf="showMsgCantPreview()" class="cant-preview-msg">
+        <div> Cannot preview file </div>
+      </div>
+    </div>
+    <div *ngIf="!isLastFile()" class="file-viewer-nav nav-right">
+      <button (click)="goToNextFile()">
+        <i class="material-icons ">keyboard_arrow_right</i>
+      </button>
+    </div>
+  </div>
+</section>

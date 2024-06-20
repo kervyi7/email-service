@@ -1,0 +1,29 @@
+.main-page {
+  display: flex;
+  width: 100%;
+  margin: auto;
+  height: 100vh;
+  background-color: #f2f2f2;
+}
+
+.main-page-panel {
+  height: 100vh;
+  background-color: #fff;
+  width: 300px;
+  z-index: 2;
+}
+
+.main-page-mail-list {
+  width: 84.5%;
+  height: 99%;
+  margin: 0vh auto;
+  background-color: #fff;
+}
+
+.main-page-panel-btn {
+  background-color: #dadada;
+  width: 80%;
+  margin: 5vh auto;
+  padding: 20px;
+  border-radius: 16px;
+}

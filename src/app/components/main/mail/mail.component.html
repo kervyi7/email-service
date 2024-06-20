@@ -1,0 +1,37 @@
+<app-file-viewer *ngIf="showPreview" [attachments]="attachments" [selectedAttachment]="selectedAttachment"
+  (onClose)="changeShowPreviewState()"></app-file-viewer>
+<section *ngIf="mail" class="mail-container">
+  <button title="back to mail list" class="arrow" (click)="goToPreviousPage()">
+    <i class="material-icons">arrow_back</i>
+  </button>
+  <div class="mail-header">
+    <div class="mail-subject">
+      {{mail.subject}}
+    </div>
+    <header class="mail-description-container">
+      <div class="mail-name-address">{{mail.fromName}} {{mail.fromAddress}}</div>
+      <div class="mail-date">{{mail.date | date:"dd/MM/yyyy',' HH:mm a" }}</div>
+    </header>
+    <div *ngIf="attachments.length != 0" class="mail-content-container">
+      <div *ngFor="let content of mail.contents" (click)="previewContent(content.contentId)">
+        <div class="content-item">
+          <img *ngIf="content.mediaType == 'image'; else iconBlock" [src]="previewImage(content.contentId)"
+            class="content-image">
+          <ng-template #iconBlock>
+            <i class="material-icons content-icon">{{getIcon(content)}}</i>
+          </ng-template>
+          <div class="content-filename-download">
+            <div class="content-filename text">
+              {{content.fileName}}
+            </div>
+            <button title="download file" class="download" (click)="downloadContent($event, content.contentId)">
+              <i class="material-icons">download</i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div [innerHTML]="mail.html| safeHtml" *ngIf="mail.html">
+  </div>
+</section>
